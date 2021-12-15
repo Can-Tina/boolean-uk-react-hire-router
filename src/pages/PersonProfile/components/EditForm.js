@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
-function HireForm(props) {
+function EditForm(props) {
   const [wage, setWage] = useState(0)
 
   const { person, hiredPeople, setHiredPeople } = props
@@ -12,15 +12,11 @@ function HireForm(props) {
     event.preventDefault()
     console.log(event.target.wage.value)
     const newHire = {}
-    newHire.name = {}
-    newHire.name.first = person.name.first
-    newHire.name.last = person.name.last
-    newHire.login = {}
-    newHire.login.uuid = person.login.uuid
     newHire.wage = event.target.wage.value
-    let hireArray = [...hiredPeople, newHire]
-    setHiredPeople(hireArray)
-    console.log(hiredPeople)
+    let alreadyHiredPeople = JSON.parse(JSON.stringify(hiredPeople))
+    let index = alreadyHiredPeople.findIndex(x => x.login.uuid === person.login.uuid);
+    alreadyHiredPeople[index].wage = newHire.wage
+    setHiredPeople(alreadyHiredPeople)
     navigate("/", {replace: true})
   }
 
@@ -34,9 +30,9 @@ function HireForm(props) {
         onChange={e => setWage(e.target.value)}
         value={wage}
       />
-      <button type="submit">Hire</button>
+      <button type="submit">Edit</button>
     </form>
   )
 }
 
-export default HireForm
+export default EditForm

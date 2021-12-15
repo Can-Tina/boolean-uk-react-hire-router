@@ -11,7 +11,8 @@ function PeopleListItem(props) {
       <h3>
         {person.name.first} {person.name.last}
       </h3>
-      <Link to={`/view/${person.login.uuid}`} state={{ person }}>View their profile</Link>
+      {!person.wage && <Link to={`/view/${person.login.uuid}`} state={{ person }}>View their profile</Link>}
+      {person.wage && <Link to={`/view/${person.login.uuid}`} state={{ person }}>Edit</Link>}
       {person.wage && <p>Wage: £{person.wage}</p>}
     </li>
 
